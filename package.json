@@ -1,0 +1,28 @@
+{
+  "name": "nextbid-grpc",
+  "version": "1.0.0",
+  "description": "An example monorepo with gRPC for both internal services and exposed APIs",
+  "keywords": [
+    "gRPC",
+    "monorepo",
+    "microservices",
+    "API",
+    "TypeScript"
+  ],
+  "author": "Robert McKenney <robert@mckenney.ca>",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "pnpm run --parallel -r clean",
+    "format": "pnpm run --parallel -r format",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "check-types": "turbo run typecheck",
+    "uninstall": "pnpm -r exec rm -rf node_modules"
+  },
+  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
+  "devDependencies": {
+    "turbo": "^2.0.11"
+  }
+}
