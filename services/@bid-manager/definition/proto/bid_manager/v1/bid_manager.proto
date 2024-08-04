@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package bid_manager.v1;
+
+import "google/protobuf/timestamp.proto";
+
+enum BidStatus {
+  BID_STATUS_UNSPECIFIED = 0;
+  BID_STATUS_PENDING = 1;
+  BID_STATUS_ACCEPTED = 2;
+  BID_STATUS_REJECTED = 3;
+  BID_STATUS_WITHDRAWN = 4;
+}
+
+message Bid {
+  string id = 1;
+  string paddle_id = 2;
+  string lot_id = 3;
+  int32 amount = 4;
+  google.protobuf.Timestamp time_placed = 5;
+  BidStatus status = 6;
+}
+
+message BidList {
+  repeated Bid bids = 1;
+}
+
+message PlaceBidRequest {
+  // A unique bidding paddle is assigned to each bidder per auction.
+  // This allows for annonymous bidding.
+  string paddle_id = 1;
+  // The unique identifier of the lot that the bid is being placed on.
+  string lot_id = 2;
+  // The bid amount in cents. e.g. $1.00 is submitted as 100.
+  // The currency is a property of the auction that the lot belongs to.
+  int32 amount = 3;
+}
+
+message PlaceBidResponse {
+  Bid bid = 1;
+}
+
+message AcceptBidRequest {
+  string id = 1;
+}
+
+message AcceptBidResponse {
+  Bid bid = 1;
+}
+
+message RejectBidRequest {
+  string id = 1;
+}
+
+message RejectBidResponse {
+  Bid bid = 1;
+}
+
+message WithdrawBidRequest {
+  string id = 1;
+}
+
+message WithdrawBidResponse {
+  Bid bid = 1;
+}
+
+message GetBidRequest {
+  string id = 1;
+}
+
+message GetBidResponse {
+  Bid bid = 1;
+}
+
+message ListBidsRequest {
+  string lot_id = 1;
+}
+
+message ListBidsResponse {
+  repeated Bid bids = 1;
+}
+
+message ListBidsByPaddleRequest {
+  string paddle_id = 1;
+}
+
+message ListBidsByPaddleResponse {
+  repeated Bid bids = 1;
+}
+
+message ListBidsByLotRequest {
+  string lot_id = 1;
+}
+
+message ListBidsByLotResponse {
+  repeated Bid bids = 1;
+}
+
+message ListBidsByStatusRequest {
+  BidStatus status = 1;
+}
+
+message ListBidsByStatusResponse {
+  repeated Bid bids = 1;
+}
+
+service BidService {
+  rpc PlaceBid(PlaceBidRequest) returns (PlaceBidResponse);
+  rpc AcceptBid(AcceptBidRequest) returns (AcceptBidResponse);
+  rpc RejectBid(RejectBidRequest) returns (RejectBidResponse);
+  rpc WithdrawBid(WithdrawBidRequest) returns (WithdrawBidResponse);
+  rpc GetBid(GetBidRequest) returns (GetBidResponse);
+  rpc ListBids(ListBidsRequest) returns (ListBidsResponse);
+  rpc ListBidsByPaddle(ListBidsByPaddleRequest) returns (ListBidsByPaddleResponse);
+  rpc ListBidsByLot(ListBidsByLotRequest) returns (ListBidsByLotResponse);
+  rpc ListBidsByStatus(ListBidsByStatusRequest) returns (ListBidsByStatusResponse);
+}

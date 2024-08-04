@@ -14,16 +14,28 @@
     "dist"
   ],
   "scripts": {
-    "build": "unbuild;",
-    "clean": "rm -rf ./dist",
+    "build:proto": "buf generate",
+    "build:ts": "unbuild",
+    "build": "pnpm run build:proto; pnpm run build:ts;",
+    "clean": "rm -rf ./dist && rm -rf ./gen",
+    "dev": "nodemon -e proto --watch proto/ --exec \"pnpm run build\"",
     "test": "echo \"@bid-manager/definition does not require test\"; exit 0;",
-    "format": "echo \"@bid-manager/definition not implemented\"; exit 0;",
-    "lint": "echo \"@bid-manager/definition not implemented\"; exit 0;"
+    "format": "buf format -w",
+    "lint": "buf lint"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@bufbuild/protobuf": "^1.10.0",
+    "typescript": "^5.5.4"
+  },
   "devDependencies": {
+    "@bufbuild/buf": "^1.35.1",
+    "@bufbuild/protoc-gen-es": "^1.10.0",
+    "@connectrpc/connect": "^1.4.0",
+    "@connectrpc/protoc-gen-connect-es": "^1.4.0",
+    "nodemon": "^3.1.4",
     "unbuild": "^2.0.0"
   }
 }

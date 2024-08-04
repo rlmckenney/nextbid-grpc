@@ -1,6 +1,7 @@
 node_modules
 # where we will output build artifacts 
-dist/
+dist
+gen
 # where turbo caches the output of 
 .turbo
 # macOS hidden files
