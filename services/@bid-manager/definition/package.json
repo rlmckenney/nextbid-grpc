@@ -1,0 +1,29 @@
+{
+  "name": "@bid-manager/definition",
+  "version": "0.0.0",
+  "description": "The BidManager service protocol definitions",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild;",
+    "clean": "rm -rf ./dist",
+    "test": "echo \"@bid-manager/definition does not require test\"; exit 0;",
+    "format": "echo \"@bid-manager/definition not implemented\"; exit 0;",
+    "lint": "echo \"@bid-manager/definition not implemented\"; exit 0;"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "unbuild": "^2.0.0"
+  }
+}
