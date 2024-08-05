@@ -2,4 +2,4 @@ packages:
   - "apis/*"
   - "apps/*"
   - "packages/*"
-  - "services/*"
+  - "services/@bid-manager/*"

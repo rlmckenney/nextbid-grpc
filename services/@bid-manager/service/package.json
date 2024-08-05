@@ -1,0 +1,42 @@
+{
+  "name": "@bid-manager/service",
+  "version": "0.0.0",
+  "description": "The BidManager service implementation - TypeScript",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf ./dist",
+    "dev": "tsx --watch src/index.ts",
+    "start": "node ./dist/index.js",
+    "test": "echo \"@bid-manager/service 'test' not implemented\"; exit 0;",
+    "format": "echo \"@bid-manager/service 'format' not implemented\"; exit 0;",
+    "lint": "echo \"@bid-manager/service 'lint' not implemented\"; exit 0;"
+  },
+  "dependencies": {
+    "@bid-manager/definition": "workspace:*",
+    "@bufbuild/protobuf": "^1.10.0",
+    "@connectrpc/connect": "^1.4.0",
+    "@connectrpc/connect-fastify": "^1.4.0",
+    "@connectrpc/connect-node": "^1.4.0",
+    "fastify": "^4.28.1",
+    "pino-pretty": "^11.2.2",
+    "redis": "^4.7.0",
+    "uuidv7": "^1.0.1",
+    "zod": "^3.23.8",
+    "zod-validation-error": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.1.0",
+    "tsx": "^4.16.5",
+    "typescript": "^5.5.4"
+  }
+}

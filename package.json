@@ -12,6 +12,7 @@
   "author": "Robert McKenney <robert@mckenney.ca>",
   "license": "ISC",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "clean": "pnpm run --parallel -r clean",
