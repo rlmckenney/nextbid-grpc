@@ -1,8 +1,8 @@
 import {readFileSync} from 'node:fs'
 import {fastify} from 'fastify'
 import {fastifyConnectPlugin} from '@connectrpc/connect-fastify'
-import routes, {contextValues} from './connectRouter.js'
-import {getLoggerConfig} from './loggerConfig.js'
+import routes, {contextValues} from './connect-router.js'
+import {getLoggerConfig} from './config/fastify-logger.js'
 
 const server = fastify({
   http2: true,

@@ -19,10 +19,10 @@ import type {
   ListBidsByStatusResponse
 } from '@bid-manager/definition'
 import {Bid, BidStatus, PlaceBidResponse} from '@bid-manager/definition'
-import {redis} from './redisConnection.js'
-import {getErrorMessage} from './utils.js'
-import {kLog} from './connectRouter.js'
-import {placeBidRequestSchema} from './requestValidators.js'
+import {redis} from '../redis-connection.js'
+import {getErrorMessage} from '../utils.js'
+import {kLog} from '../connect-router.js'
+import {placeBidRequestSchema} from './request-validators.js'
 import {fromZodError} from 'zod-validation-error'
 import {ZodError} from 'zod'
 
@@ -53,8 +53,7 @@ export async function placeBid(
   log.info(request, `${logPrefix} request payload`)
 
   try {
-    // The `proto3` syntax does not allow defining required fields
-    // Check for required fields and apply any domain validation manually
+    // Check for required fields and apply any domain validation manually.
     const parsedParams = placeBidRequestSchema.parse(request)
 
     // Construct a new bid from the request params
