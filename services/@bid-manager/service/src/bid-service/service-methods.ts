@@ -23,26 +23,9 @@ import {redis} from '../redis-connection.js'
 import {getErrorMessage} from '../utils.js'
 import {kLog} from '../connect-router.js'
 import {placeBidRequestSchema} from './request-validators.js'
+import {acceptBid, isTopBid, publishBidEvent, rejectBid} from './state.js'
 import {fromZodError} from 'zod-validation-error'
 import {ZodError} from 'zod'
-
-type BidEvent = {
-  id: string
-  message: {
-    id: string
-    paddleId: string
-    lotId: string
-    amount: string
-    timePlaced: string
-    status: BidStatus
-  }
-}
-
-const AUCTION_ID = '1'
-
-function getRedisKey(auctionId: string, lotId: string) {
-  return `auction:${auctionId}:lot:${lotId}:bids-placed`
-}
 
 export async function placeBid(
   request: PlaceBidRequest,
@@ -53,7 +36,7 @@ export async function placeBid(
   log.info(request, `${logPrefix} request payload`)
 
   try {
-    // Check for required fields and apply any domain validation manually.
+    // Check for required fields and apply any domain validation rules.
     const parsedParams = placeBidRequestSchema.parse(request)
 
     // Construct a new bid from the request params
@@ -61,24 +44,19 @@ export async function placeBid(
     bid.id = uuidv7()
     bid.status = BidStatus.PENDING
     bid.timePlaced = Timestamp.now()
-
-    // Transform the bid into a Redis stream compatible message
-    // All fields must be strings
-    const eventMessage = {
-      ...bid,
-      amount: bid.amount.toString(),
-      status: bid.status.toString(),
-      timePlaced: bid.timePlaced.toDate().getTime().toString()
-    }
+    log.info({bid}, `${logPrefix} bid created`)
 
     // Add the bid to the 'bids-placed' Redis stream
-    const bidEventId = await redis.xAdd(
-      getRedisKey(AUCTION_ID, bid.lotId),
-      '*',
-      eventMessage
-    )
+    const bidEventId = await publishBidEvent(bid)
     log.info({bidEventId}, `${logPrefix} bid placed`)
-    return new PlaceBidResponse({bid})
+
+    // Check if this is the highest bid for the lot
+    const resolvedBid = (await isTopBid(bid))
+      ? await acceptBid(bid)
+      : await rejectBid(bid)
+
+    log.info({bid}, `${logPrefix} bid resolved`)
+    return new PlaceBidResponse({bid: resolvedBid})
   } catch (error) {
     if (error instanceof ZodError) {
       const validationError = fromZodError(error)
