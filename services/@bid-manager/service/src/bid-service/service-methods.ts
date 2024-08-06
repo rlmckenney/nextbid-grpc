@@ -23,7 +23,15 @@ import {redis} from '../redis-connection.js'
 import {getErrorMessage} from '../utils.js'
 import {kLog} from '../connect-router.js'
 import {placeBidRequestSchema} from './request-validators.js'
-import {acceptBid, isTopBid, publishBidEvent, rejectBid} from './state.js'
+import {
+  acceptBid,
+  isTopBid,
+  lockTopBid,
+  publishBidEvent,
+  rejectBid,
+  topBidIsLocked,
+  unlockTopBid
+} from './state.js'
 import {fromZodError} from 'zod-validation-error'
 import {ZodError} from 'zod'
 
@@ -51,9 +59,16 @@ export async function placeBid(
     log.info({bidEventId}, `${logPrefix} bid placed`)
 
     // Check if this is the highest bid for the lot
+    const lock = await lockTopBid(bid)
+    log.info({lock}, `${logPrefix} top bid lock set`)
     const resolvedBid = (await isTopBid(bid))
       ? await acceptBid(bid)
       : await rejectBid(bid)
+    const unlockDidSucceed = await unlockTopBid(
+      lock.topBidKey,
+      lock.lockHolderId
+    )
+    log.info({unlockDidSucceed}, `${logPrefix} top bid lock released`)
 
     log.info({bid}, `${logPrefix} bid resolved`)
     return new PlaceBidResponse({bid: resolvedBid})
