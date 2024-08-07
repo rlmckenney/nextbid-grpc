@@ -28,6 +28,7 @@
     "@connectrpc/connect-fastify": "^1.4.0",
     "@connectrpc/connect-node": "^1.4.0",
     "fastify": "^4.28.1",
+    "@nextbid/typescript-config": "workspace:*",
     "pino-pretty": "^11.2.2",
     "redis": "^4.7.0",
     "uuidv7": "^1.0.1",

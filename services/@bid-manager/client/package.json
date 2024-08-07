@@ -24,7 +24,8 @@
   "dependencies": {
     "@bid-manager/definition": "workspace:*",
     "@connectrpc/connect": "^1.4.0",
-    "@connectrpc/connect-node": "^1.4.0"
+    "@connectrpc/connect-node": "^1.4.0",
+    "@nextbid/typescript-config": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.1.0",

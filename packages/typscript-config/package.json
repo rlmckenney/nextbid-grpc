@@ -1,0 +1,24 @@
+{
+  "name": "@nextbid/typescript-config",
+  "version": "1.0.0",
+  "description": "Shared base configuration for TypeScript projects",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./tsconfig.json",
+      "require": "./tsconfig.json"
+    }
+  },
+  "scripts": {
+    "build": "echo \"@nextbid/typscript-config 'build' not implemented\"; exit 0;",
+    "clean": "echo \"@nextbid/typscript-config 'clean' not implemented\"; exit 0;",
+    "format": "echo \"@nextbid/typscript-config 'format' not implemented\"; exit 0;",
+    "lint": "echo \"@nextbid/typscript-config 'lint' not implemented\"; exit 0;",
+    "test": "echo \"@nextbid/typscript-config 'test' not implemented\"; exit 0;",
+    "check-types": "echo \"@nextbid/typscript-config 'check-types' not implemented\"; exit 0;",
+    "uninstall": "echo \"@nextbid/typscript-config 'uninstall' not implemented\"; exit 0;"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
