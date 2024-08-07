@@ -23,6 +23,6 @@ Uses the following technologies:
 └── services      (internal services used by app(s) and API(s))
 ```
 
-Child directories in these folders correspond to package scopes. For example, the `apps/@www` directory contains the `@nextbid/www` package corresponding to the public website for the company.
+Child directories in these folders correspond to package scopes. For example, the `apps/www` directory contains the `@nextbid/www` package corresponding to the public website for the company.
 
-All packages are scoped under the `@nextbid` namespace. Within the monorepo, packages are referenced by their scope name, e.g. `@nextbid/www`, `@nextbid/api`, etc.
+Most packages are scoped under the `@nextbid` namespace. Within the monorepo, packages are referenced by their scope name, e.g. `@nextbid/www`, `@nextbid/api`, etc. Some related packages are grouped under an internal scope like `@bid-manager`, that includes `@bid-manager/definition`, `@bid-manager/service`, `@bid-manager/client`, etc.
